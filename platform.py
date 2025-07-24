@@ -10,3 +10,9 @@ class Platform(pg.sprite.Sprite):
     def setPlatform(self, x, y):
         self.rect.x = x
         self.rect.y = y
+
+    def checkCollide(self, platforms):
+        if len(pg.sprite.spritecollide(self, platforms, False)) <= 1:
+            return True
+        return False
+
