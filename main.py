@@ -1,5 +1,6 @@
 from camera import Camera
 from player import Player  # doodle jump player model
+from main_menu import MainMenu
 from system import *
 
 
@@ -17,8 +18,27 @@ def main():
     background = get_background("data/background/background.png")
     bottom = get_bottom("data/background/bottom.png")
 
+    player_running = False
+    menu_running = True
+    options_running = False
+
     running = True  # flag for stopping main cycle
     while running:  # main cycle
+
+        if menu_running:
+            menu = MainMenu()
+            res = menu.run(screen)
+            if res == "play":
+                player_running = True
+                menu_running = False
+                options_running = False
+            elif res == "options":
+                player_running = False
+                menu_running = False
+                options_running = True
+            else:
+                break
+
 
         screen.blit(background, (0, 0))
         set_platforms(all_platforms)  # set and delete some amount of platforms
