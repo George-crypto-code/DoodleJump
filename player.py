@@ -5,10 +5,16 @@ from settings import WIGHT
 class Player(pg.sprite.Sprite):  # main player class
     def __init__(self):
         super().__init__()  # inherit methods from sprite
-        self.image = pg.image.load("data/player/player_right.png")  # save image
+        self.player_right = pg.image.load("data/player/player_right.png")  # save image
+        self.player_right_jump = pg.image.load("data/player/player_right_jump.png")
+        self.player_left = pg.image.load("data/player/player_left.png")
+        self.player_left_jump = pg.image.load("data/player/player_left_jump.png")
+
+        self.image = self.player_right
+
         self.rect = self.image.get_rect()  # get rect of player image
-        self.direction = "right" # direction for picture
-        self.flag_timer = False # flag for jump
+        self.direction = True # direction for picture
+        self.jumping = False # flag for jump
         self.mask = pg.mask.from_surface(self.image)
         self.pos = pg.Vector2(100.0, 355.0)  # extra field for moving on coordinates
         self.velocityY = pg.Vector2(0.0, -3)  # start speed on Oy
@@ -27,34 +33,30 @@ class Player(pg.sprite.Sprite):  # main player class
 
     def setDirection(self, direction):  # change image depending on moving
         if direction == "left":
-            path = "data/player/player_left_jump.png" if self.flag_timer else "data/player/player_left.png"
-            self.image = pg.image.load(path)  # take base picture and mirroring
-            self.direction = "left"
+            self.image = self.player_left_jump if self.jumping else self.player_left
+            self.direction = False
         elif direction == "right":
-            path = "data/player/player_right_jump.png" if self.flag_timer else "data/player/player_right.png"
-            self.image = pg.image.load(path)  # base picture
-            self.direction = "right"
-        else:
-            raise Exception("This direct does not exist")
+            self.image = self.player_right_jump if self.jumping else self.player_right
+            self.direction = True
 
     def jump(self):
         self.velocityY.y = -3
-        if self.direction == "right":
-            self.image = pg.image.load("data/player/player_right_jump.png")
+        if self.direction:
+            self.image = self.player_right_jump
         else:
-            self.image = pg.image.load("data/player/player_left_jump.png")
+            self.image = self.player_left_jump
 
         pg.time.set_timer(pg.USEREVENT, 300)
-        self.flag_timer = True
+        self.jumping = True
 
     def stopJump(self):
-        if self.direction == "right":
-            self.image = pg.image.load("data/player/player_right.png")
+        if self.direction:
+            self.image = self.player_right
         else:
-            self.image = pg.image.load("data/player/player_left.png")
+            self.image = self.player_left
 
         pg.time.set_timer(pg.USEREVENT, 0)
-        self.flag_timer = False
+        self.jumping = False
 
     def update(self, platforms):
         self.velocityY.y += self.gravity  # calculate speed with gravity
@@ -67,3 +69,6 @@ class Player(pg.sprite.Sprite):  # main player class
 
         self.rect.center = self.pos  # set player model on the new place
         self.rect.centerx %= WIGHT
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)

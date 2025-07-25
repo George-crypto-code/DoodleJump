@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add class of platforms">
+    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add endless platforms and animation for jump">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform.py" beforeDir="false" afterPath="$PROJECT_DIR$/platform.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +58,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\data\background" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\data\platforms" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\data\player" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\data" />
@@ -99,12 +95,21 @@
       <option name="project" value="LOCAL" />
       <updated>1753295555995</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add endless platforms and animation for jump">
+      <option name="closed" value="true" />
+      <created>1753378002458</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1753378002458</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add main player model" />
     <MESSAGE value="add class of platforms" />
-    <option name="LAST_COMMIT_MESSAGE" value="add class of platforms" />
+    <MESSAGE value="add endless platforms and animation for jump" />
+    <option name="LAST_COMMIT_MESSAGE" value="add endless platforms and animation for jump" />
   </component>
 </project>

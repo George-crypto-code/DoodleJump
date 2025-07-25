@@ -46,7 +46,7 @@ def main():
 
         player.update(all_platforms)  # update speed and collision
         all_platforms.draw(screen)  # draw all platforms
-        screen.blit(player.image, player.rect)  # draw player
+        player.draw(screen)  # draw player
 
         camera.update(player)  # watch for player
         for platform in all_platforms:
