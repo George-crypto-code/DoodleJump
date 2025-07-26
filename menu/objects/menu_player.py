@@ -4,8 +4,8 @@ import pygame as pg
 class MenuPlayer(pg.sprite.Sprite):  # main player class
     def __init__(self):
         super().__init__()  # inherit methods from sprite
-        self.player_right = pg.image.load("data/player/player_right.png")  # save image
-        self.player_right_jump = pg.image.load("data/player/player_right_jump.png")
+        self.player_right = pg.image.load("menu/images/player/player_right.png")  # save image
+        self.player_right_jump = pg.image.load("menu/images/player/player_right_jump.png")
 
         self.image = self.player_right
 

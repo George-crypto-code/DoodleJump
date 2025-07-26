@@ -1,6 +1,6 @@
-from player import Player  # doodle jump player model
-from main_menu import MainMenu
-from system import *
+from game.objects.player import Player  # doodle jump player model
+from menu.objects.main_menu import MainMenu
+from system.system import *
 
 
 def main():

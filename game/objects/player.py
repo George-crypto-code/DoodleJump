@@ -1,31 +1,34 @@
 import pygame as pg  # main library
 from collections import OrderedDict
 
-from camera import Camera
-from settings import WIGHT, HEIGHT, GRAVITY, SPEED, STRENGTH_JUMP
-from platform import Platform
-from system import get_background, get_bottom, set_platforms
+from .camera import Camera
+from system.settings import WIGHT, HEIGHT, GRAVITY, SPEED, STRENGTH_JUMP
+from game.objects.platform import Platform
+from system.system import get_background, get_bottom, get_top, set_platforms, show_score
 
 
 class Player(pg.sprite.Sprite):  # main player class
     def __init__(self):
         super().__init__()  # inherit methods from sprite
-        self.player_right = pg.image.load("data/player/player_right.png")  # save image
-        self.player_right_jump = pg.image.load("data/player/player_right_jump.png")
-        self.player_left = pg.image.load("data/player/player_left.png")
-        self.player_left_jump = pg.image.load("data/player/player_left_jump.png")
+        self.player_right = pg.image.load("game/images/player/player_right.png")  # save image
+        self.player_right_jump = pg.image.load("game/images/player/player_right_jump.png")
+        self.player_left = pg.image.load("game/images/player/player_left.png")
+        self.player_left_jump = pg.image.load("game/images/player/player_left_jump.png")
 
         self.image = self.player_right
 
         self.rect = self.image.get_rect()  # get rect of player image
-        self.direction = True # direction for picture
-        self.jumping = False # flag for jump
         self.mask = pg.mask.from_surface(self.image)
+
         self.pos = pg.Vector2(100.0, 355.0)  # extra field for moving on coordinates
         self.velocityY = pg.Vector2(0.0, STRENGTH_JUMP)  # start speed on Oy
         self.velocityX = pg.Vector2(0.0, 0.0)  # start speed on Ox
         self.gravity = GRAVITY  # force of gravity
         self.rect.center = self.pos  # set player model on start
+
+        self.direction = True  # direction for picture
+        self.jumping = False  # flag for jump
+        self.current_score, self.max_score = 0, 0
 
     def movingLeft(self):  # moving while pressed A
         self.velocityX.x = -SPEED
@@ -83,8 +86,9 @@ class Player(pg.sprite.Sprite):  # main player class
         all_platforms = pg.sprite.Group()
         Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
         camera = Camera()
-        background = get_background("data/background/background.png")
-        bottom = get_bottom("data/background/bottom.png")
+        background = get_background("game/images/background/background.png")
+        bottom = get_bottom("game/images/background/bottom.png")
+        top = get_top("game/images/background/top.png")
 
         pressed_keys = OrderedDict()
 
@@ -130,6 +134,12 @@ class Player(pg.sprite.Sprite):  # main player class
                 camera.apply(platform)
 
             screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
+            screen.blit(top, (0, 0))
+
+            self.current_score += self.velocityY.y / 20
+            # if
+            self.max_score = min(self.current_score, self.max_score)
+            show_score(screen, self.max_score)
 
             pg.display.flip()  # change display picture
             clock.tick(60)  # set fps

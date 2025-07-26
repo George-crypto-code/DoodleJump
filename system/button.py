@@ -1,5 +1,5 @@
 import pygame as pg
-from system import get_button
+from .system import get_button
 
 
 class Button(pg.sprite.Sprite):
