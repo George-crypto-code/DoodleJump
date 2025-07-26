@@ -1,5 +1,10 @@
 import pygame as pg  # main library
-from settings import WIGHT
+from collections import OrderedDict
+
+from camera import Camera
+from settings import WIGHT, HEIGHT, GRAVITY, SPEED, STRENGTH_JUMP
+from platform import Platform
+from system import get_background, get_bottom, set_platforms
 
 
 class Player(pg.sprite.Sprite):  # main player class
@@ -17,19 +22,19 @@ class Player(pg.sprite.Sprite):  # main player class
         self.jumping = False # flag for jump
         self.mask = pg.mask.from_surface(self.image)
         self.pos = pg.Vector2(100.0, 355.0)  # extra field for moving on coordinates
-        self.velocityY = pg.Vector2(0.0, -3)  # start speed on Oy
+        self.velocityY = pg.Vector2(0.0, STRENGTH_JUMP)  # start speed on Oy
         self.velocityX = pg.Vector2(0.0, 0.0)  # start speed on Ox
-        self.gravity = 0.03  # force of gravity
+        self.gravity = GRAVITY  # force of gravity
         self.rect.center = self.pos  # set player model on start
 
     def movingLeft(self):  # moving while pressed A
-        self.velocityX.x = -2
+        self.velocityX.x = -SPEED
 
     def stopMoving(self):  # stop moving on Ox
         self.velocityX.x = 0
 
     def movingRight(self):  # moving while pressed D
-        self.velocityX.x = 2
+        self.velocityX.x = SPEED
 
     def setDirection(self, direction):  # change image depending on moving
         if direction == "left":
@@ -40,7 +45,7 @@ class Player(pg.sprite.Sprite):  # main player class
             self.direction = True
 
     def jump(self):
-        self.velocityY.y = -3
+        self.velocityY.y = STRENGTH_JUMP
         if self.direction:
             self.image = self.player_right_jump
         else:
@@ -72,3 +77,59 @@ class Player(pg.sprite.Sprite):  # main player class
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def running(self, screen):
+        clock = pg.time.Clock()  # set time on main cycle
+        all_platforms = pg.sprite.Group()
+        Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
+        camera = Camera()
+        background = get_background("data/background/background.png")
+        bottom = get_bottom("data/background/bottom.png")
+
+        pressed_keys = OrderedDict()
+
+        while True:
+
+            screen.blit(background, (0, 0))
+            set_platforms(all_platforms)  # set and delete some amount of platforms
+
+            for event in pg.event.get():  # get all events at the moment
+                if event.type == pg.QUIT:  # if user click on close button
+                    return "quit"
+                if event.type == pg.USEREVENT:
+                    self.stopJump()  # event for stop jumping animation
+
+            keys = pg.key.get_pressed()
+            if keys[pg.K_d]:
+                pressed_keys["d"] = True
+            else:
+                pressed_keys.pop("d", None)
+
+            if keys[pg.K_a]:
+                pressed_keys["a"] = True
+            else:
+                pressed_keys.pop("a", None)
+
+            if pressed_keys:
+                current_key = next(reversed(pressed_keys))
+                if current_key == "d":
+                    self.setDirection("right")
+                    self.movingRight()
+                else:
+                    self.setDirection("left")
+                    self.movingLeft()
+            else:
+                self.stopMoving()
+
+            self.update(all_platforms)  # update speed and collision
+            all_platforms.draw(screen)  # draw all platforms
+            self.draw(screen)  # draw player
+
+            camera.update(self)  # watch for player
+            for platform in all_platforms:
+                camera.apply(platform)
+
+            screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
+
+            pg.display.flip()  # change display picture
+            clock.tick(60)  # set fps

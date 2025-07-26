@@ -20,7 +20,7 @@ class MenuPlayer(pg.sprite.Sprite):  # main player class
     def jump(self):
         self.velocityY.y = -8
         self.image = self.player_right_jump
-        pg.time.set_timer(pg.USEREVENT, 300)
+        pg.time.set_timer(pg.USEREVENT, 200)
         self.jumping = True
 
     def stopJump(self):

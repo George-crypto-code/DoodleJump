@@ -41,10 +41,8 @@ def set_platforms(all_platforms):
     for i in range(PLATFORM_AMOUNT - len(all_platforms)):
         current_platform = Platform(all_platforms)
         x = randint(3, WIGHT - 60)
-        # y = randint(HEIGHT // PLATFORM_AMOUNT * i - 30, HEIGHT // PLATFORM_AMOUNT * (i + 1))
-        y = HEIGHT // PLATFORM_AMOUNT * i
+        y = HEIGHT // PLATFORM_AMOUNT * i - 10
         current_platform.setPlatform(x, y)
         while not current_platform.checkCollide(all_platforms):
             x = randint(3, WIGHT - 60)
-        #     y = randint(HEIGHT // PLATFORM_AMOUNT * i - 30, HEIGHT // PLATFORM_AMOUNT * (i + 1))
             current_platform.setPlatform(x, y)
