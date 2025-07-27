@@ -5,6 +5,7 @@ from .camera import Camera
 from system.settings import WIGHT, HEIGHT, GRAVITY, SPEED, STRENGTH_JUMP
 from game.objects.platform import Platform
 from system.system import get_background, get_bottom, get_top, set_platforms, show_score
+from system.button import Button
 
 
 class Player(pg.sprite.Sprite):  # main player class
@@ -86,13 +87,67 @@ class Player(pg.sprite.Sprite):  # main player class
         all_platforms = pg.sprite.Group()
         Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
         camera = Camera()
+
+        pause_flag = False
+        pause_button = Button()
+        pause_button.setImage("game/images/buttons/pause.png", "game/images/buttons/pause_hover.png")
+        pause_button.setPosition(350, 17)
+        pause_button.setSignal("pause")
+
+        menu_button = Button()
+        menu_button.setImage("game/images/buttons/menu.png", "game/images/buttons/menu_hover.png")
+        menu_button.setPosition(300, 460)
+        menu_button.setSignal("menu")
+
+        play_again_button = Button()
+        play_again_button.setImage("game/images/buttons/play_again.png", "game/images/buttons/play_again_hover.png")
+        play_again_button.setPosition(120, 400)
+        play_again_button.setSignal("play")
+
         background = get_background("game/images/background/background.png")
         bottom = get_bottom("game/images/background/bottom.png")
         top = get_top("game/images/background/top.png")
+        pause_background = get_background("game/images/background/pause_background.png")
 
         pressed_keys = OrderedDict()
 
         while True:
+
+            if pause_flag:
+                screen.blit(pause_background, (0, 0))
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        return "quit"
+                    if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                        if pause_button.click():
+                            pause_flag = False
+                            continue
+                        if signal := play_again_button.click():
+                            return signal
+                        if signal := menu_button.click():
+                            return signal
+
+                # keys = pg.key.get_pressed()
+                # if keys[pg.K_ESCAPE]:
+                #     pause_flag = False
+                #     continue
+
+                screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
+                screen.blit(top, (0, 0))
+                show_score(screen, self.max_score)
+
+                pause_button.update()
+                pause_button.draw(screen)
+
+                menu_button.update()
+                menu_button.draw(screen)
+
+                play_again_button.update()
+                play_again_button.draw(screen)
+
+                pg.display.flip()
+                clock.tick(60)
+                continue
 
             screen.blit(background, (0, 0))
             set_platforms(all_platforms)  # set and delete some amount of platforms
@@ -102,8 +157,16 @@ class Player(pg.sprite.Sprite):  # main player class
                     return "quit"
                 if event.type == pg.USEREVENT:
                     self.stopJump()  # event for stop jumping animation
+                if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                    if pause_button.click():
+                        pause_flag = True
 
             keys = pg.key.get_pressed()
+
+            # if keys[pg.K_ESCAPE]:
+            #     pause_flag = True
+            #     continue
+
             if keys[pg.K_d]:
                 pressed_keys["d"] = True
             else:
@@ -137,9 +200,11 @@ class Player(pg.sprite.Sprite):  # main player class
             screen.blit(top, (0, 0))
 
             self.current_score += self.velocityY.y / 20
-            # if
             self.max_score = min(self.current_score, self.max_score)
             show_score(screen, self.max_score)
+
+            pause_button.update()
+            pause_button.draw(screen)
 
             pg.display.flip()  # change display picture
             clock.tick(60)  # set fps

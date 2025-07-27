@@ -1,5 +1,4 @@
 import pygame as pg
-from .system import get_button
 
 
 class Button(pg.sprite.Sprite):
@@ -26,8 +25,8 @@ class Button(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
 
     def setImage(self, default_image, hover_image):
-        self.default_image = get_button(default_image)
-        self.hover_image = get_button(hover_image)
+        self.default_image = pg.image.load(default_image)
+        self.hover_image = pg.image.load(hover_image)
         self.image = self.default_image
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)

@@ -32,11 +32,6 @@ def get_top(path):
     return pg.transform.scale(image, (WIGHT, image.get_height() * (WIGHT / image.get_width())))
 
 
-def get_button(path):
-    image = pg.image.load(path)
-    return pg.transform.scale(image, (130, 47))
-
-
 def set_platforms(all_platforms):
     for platform in all_platforms:
         if platform.rect.centery >= HEIGHT + 50:

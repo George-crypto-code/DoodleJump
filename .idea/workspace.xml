@@ -4,40 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="clear code">
+    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add score bar">
+      <change afterPath="$PROJECT_DIR$/menu/images/player/player_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/menu/images/player/player_right_jump.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/camera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/background/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/background/background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/background/bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/background/bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/background/main_menu_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/background/main_menu_background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/background/options_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/background/options_background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/background/pause_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/background/pause_background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/menu.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/menu_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/menu_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/options.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/options.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/options_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/options_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/options_title.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/play.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/play.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/play_again.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/play_again.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/play_again_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/play_again_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/buttons/play_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/play_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/platforms/fake_platform.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/platforms/fake_platform.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/platforms/platform.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/platforms/platform.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player/player_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/player/player_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player/player_left_jump.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/player/player_left_jump.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player/player_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/player/player_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player/player_right_jump.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/player/player_right_jump.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player/player_shoot.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/player/player_shoot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/player/player_shoot_jump.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/player/player_shoot_jump.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/background/options_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/background/options_background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/buttons/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/menu.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/buttons/menu_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/menu_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/buttons/pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/pause.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/buttons/pause_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/pause_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/buttons/play_again.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/play_again.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/buttons/play_again_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/play_again_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/objects/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/objects/main_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/objects/menu_player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platform.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/platform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/images/button/options.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/options.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/images/button/options_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/options_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/images/button/play.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/play.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/images/button/play_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/play_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/system.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +65,7 @@
     "Python.main.executor": "Run",
     "Python.player.executor": "Run",
     "Python.settings.executor": "Run",
+    "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -95,11 +81,11 @@
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\objects" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\background" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\player" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\system" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\objects" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\objects" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -165,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753515508785</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add score bar">
+      <option name="closed" value="true" />
+      <created>1753549967912</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1753549967912</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -175,6 +169,7 @@
     <MESSAGE value="start doing menu" />
     <MESSAGE value="add main menu" />
     <MESSAGE value="clear code" />
-    <option name="LAST_COMMIT_MESSAGE" value="clear code" />
+    <MESSAGE value="add score bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="add score bar" />
   </component>
 </project>

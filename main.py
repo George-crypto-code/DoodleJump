@@ -31,7 +31,11 @@ def main():
 
         if player_running:
             res = player.running(screen)
-            if res == "menu":
+            if res == "play":
+                player_running = True
+                menu_running = False
+                options_running = False
+            elif res == "menu":
                 player_running = False
                 menu_running = True
                 options_running = False
