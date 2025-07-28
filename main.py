@@ -1,5 +1,6 @@
 from game.objects.player import Player  # doodle jump player model
 from menu.objects.main_menu import MainMenu
+from options.objects.options import Options
 from system.system import *
 
 
@@ -36,6 +37,16 @@ def main():
                 menu_running = False
                 options_running = False
             elif res == "menu":
+                player_running = False
+                menu_running = True
+                options_running = False
+            else:
+                break
+
+        if options_running:
+            options = Options()
+            res = options.running(screen)
+            if res == "menu":
                 player_running = False
                 menu_running = True
                 options_running = False

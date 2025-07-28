@@ -4,31 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add pause and play again">
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/9.png" afterDir="false" />
+    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add game over  screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/0.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/3.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/5.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/6.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/7.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/8.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/numbers/9.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/objects/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/images/background/options_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/options/images/background/options_background.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,24 +54,24 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Acer/PycharmProjects/DoodleJump/game/images/numbers/mini",
+    "last_opened_file_path": "C:/Users/Acer/PycharmProjects/DoodleJump/options/images/buttons",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\options\images\buttons" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\numbers\mini" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\buttons\mini" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\platform" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\player" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\objects" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\options\images\background" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\numbers\default" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\numbers" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\buttons" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\buttons\default" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\background" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -175,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753631006331</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add game over  screen">
+      <option name="closed" value="true" />
+      <created>1753693177925</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1753693177925</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -187,6 +173,7 @@
     <MESSAGE value="clear code" />
     <MESSAGE value="add score bar" />
     <MESSAGE value="add pause and play again" />
-    <option name="LAST_COMMIT_MESSAGE" value="add pause and play again" />
+    <MESSAGE value="add game over  screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="add game over  screen" />
   </component>
 </project>
