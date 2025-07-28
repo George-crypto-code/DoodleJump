@@ -55,7 +55,16 @@ def show_score(screen, score):
     # surface = pg.Surface((wight, height))
     wight = 10
     for digit in str(int(abs(score))):
-        image = pg.image.load(f"game/images/numbers/{digit}.png")
+        image = pg.image.load(f"game/images/numbers/default/{digit}.png")
         screen.blit(image, (wight, 5))
+        wight += image.get_width()
+
+
+def show_mini_score(screen, score, pos):
+    wight = 0
+    x, y = pos
+    for digit in str(int(abs(score))):
+        image = pg.image.load(f"game/images/numbers/mini/{digit}.png")
+        screen.blit(image, (x + wight, y))
         wight += image.get_width()
 

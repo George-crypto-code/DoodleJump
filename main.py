@@ -7,8 +7,6 @@ def main():
     pg.init()  # pg initialization
     size = WIGHT, HEIGHT  # window size
     screen = pg.display.set_mode(size)  # set siz on window
-    player = Player()  # main player
-    menu = MainMenu()
 
     player_running = False
     menu_running = True
@@ -17,6 +15,7 @@ def main():
     while True:  # main cycle
 
         if menu_running:
+            menu = MainMenu()
             res = menu.run(screen)
             if res == "play":
                 player_running = True
@@ -30,6 +29,7 @@ def main():
                 break
 
         if player_running:
+            player = Player()
             res = player.running(screen)
             if res == "play":
                 player_running = True

@@ -4,24 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add score bar">
-      <change afterPath="$PROJECT_DIR$/menu/images/player/player_right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/menu/images/player/player_right_jump.png" afterDir="false" />
+    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add pause and play again">
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/images/numbers/mini/9.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/background/options_background.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/background/options_background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/buttons/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/menu.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/buttons/menu_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/menu_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/buttons/pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/pause.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/buttons/pause_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/pause_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/buttons/play_again.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/play_again.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/images/buttons/play_again_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/buttons/play_again_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/0.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/3.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/5.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/6.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/7.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/7.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/8.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/8.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/images/numbers/9.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/images/numbers/default/9.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/objects/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/images/button/options.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/options.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/images/button/options_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/options_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/images/button/play.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/play.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/images/button/play_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/menu/images/button/play_hover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/button.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/system.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,22 +76,24 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Acer/PycharmProjects/DoodleJump/menu/images/platform",
+    "last_opened_file_path": "C:/Users/Acer/PycharmProjects/DoodleJump/game/images/numbers/mini",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\numbers\mini" />
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\buttons\mini" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\platform" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\player" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\objects" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\numbers\default" />
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\numbers" />
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\buttons" />
+      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images\buttons\default" />
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\background" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\menu\images\player" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\system" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\objects" />
-      <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\game\images" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -159,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753549967912</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add pause and play again">
+      <option name="closed" value="true" />
+      <created>1753631006331</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1753631006331</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -170,6 +186,7 @@
     <MESSAGE value="add main menu" />
     <MESSAGE value="clear code" />
     <MESSAGE value="add score bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="add score bar" />
+    <MESSAGE value="add pause and play again" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pause and play again" />
   </component>
 </project>
