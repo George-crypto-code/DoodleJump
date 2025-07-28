@@ -6,6 +6,7 @@ from system.system import *
 
 def main():
     pg.init()  # pg initialization
+    pg.mixer.init()
     size = WIGHT, HEIGHT  # window size
     screen = pg.display.set_mode(size)  # set siz on window
 

@@ -16,6 +16,12 @@ class Player(pg.sprite.Sprite):  # main player class
         self.player_left = pg.image.load("game/images/player/player_left.png")
         self.player_left_jump = pg.image.load("game/images/player/player_left_jump.png")
 
+        self.jump_sound = pg.mixer.Sound("sounds/jump.wav")
+        self.pause_sound = pg.mixer.Sound("sounds/pause.wav")
+        self.unpause_sound = pg.mixer.Sound("sounds/unpause.wav")
+        self.game_over_sound = pg.mixer.Sound("sounds/fall.wav")
+        self.button_sound = pg.mixer.Sound("sounds/button.wav")
+
         self.image = self.player_right
 
         self.rect = self.image.get_rect()  # get rect of player image
@@ -54,7 +60,7 @@ class Player(pg.sprite.Sprite):  # main player class
             self.image = self.player_right_jump
         else:
             self.image = self.player_left_jump
-
+        self.jump_sound.play()
         pg.time.set_timer(pg.USEREVENT, 300)
         self.jumping = True
 
@@ -63,7 +69,6 @@ class Player(pg.sprite.Sprite):  # main player class
             self.image = self.player_right
         else:
             self.image = self.player_left
-
         pg.time.set_timer(pg.USEREVENT, 0)
         self.jumping = False
 
@@ -129,10 +134,13 @@ class Player(pg.sprite.Sprite):  # main player class
                     if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                         if pause_button.click():
                             pause_flag = False
-                            continue
+                            self.unpause_sound.play()
+                            break
                         if signal := play_again_button.click():
+                            self.button_sound.play()
                             return signal
                         if signal := menu_button.click():
+                            self.button_sound.play()
                             return signal
 
                 screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
@@ -180,8 +188,10 @@ class Player(pg.sprite.Sprite):  # main player class
                             return "quit"
                         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                             if signal := play_again_button.click():
+                                self.button_sound.play()
                                 return signal
                             if signal := menu_button.click():
+                                self.button_sound.play()
                                 return signal
 
                     if your_high_score_rect[1] <= self.rect.y:
@@ -228,9 +238,11 @@ class Player(pg.sprite.Sprite):  # main player class
                     if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                         if pause_button.click():
                             pause_flag = True
+                            self.pause_sound.play()
 
                 if self.velocityY.y >= 20:
                     game_over_flag = True
+                    self.game_over_sound.play()
 
                 keys = pg.key.get_pressed()
 
@@ -270,6 +282,7 @@ class Player(pg.sprite.Sprite):  # main player class
                 if self.current_score < self.max_score:
                     self.max_score = self.current_score
                     if (a := int(abs(self.max_score))) > BEST_SCORE:
+                        BEST_SCORE = self.max_score
                         with open("system/best_score.txt", mode="w") as file:
                             file.write(str(a))
                 show_score(screen, self.max_score)

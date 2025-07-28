@@ -34,6 +34,7 @@ class MainMenu:
         all_platforms = pg.sprite.Group()
         platform = MenuPlatform(all_platforms)
         platform.setPlatform(80, 450)
+        sound = pg.mixer.Sound("sounds/button.wav")
 
         while True:
 
@@ -42,8 +43,10 @@ class MainMenu:
                     return "quit"
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     if signal := self.play_button.click():
+                        sound.play()
                         return signal
                     if signal := self.options_button.click():
+                        sound.play()
                         return signal
                 if event.type == pg.USEREVENT:
                     player.stopJump()

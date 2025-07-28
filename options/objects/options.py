@@ -20,6 +20,7 @@ class Options:
 
     def running(self, screen):
         clock = pg.time.Clock()
+        sound = pg.mixer.Sound("sounds/button.wav")
         while True:
             screen.blit(self.background, (0, 0))
             for event in pg.event.get():
@@ -27,6 +28,7 @@ class Options:
                     return "quit"
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     if signal := self.menu_button.click():
+                        sound.play()
                         return signal
             self.menu_button.update()
             self.menu_button.draw(screen)
