@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add sound">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add springs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/objects/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/thump.wav" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/system/best_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/system/best_score.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/system/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/system.py" afterDir="false" />
     </list>
@@ -180,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753727307124</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add springs">
+      <option name="closed" value="true" />
+      <created>1753778179215</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1753778179215</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -195,6 +203,7 @@
     <MESSAGE value="add game over  screen" />
     <MESSAGE value="add options screen" />
     <MESSAGE value="add sound" />
-    <option name="LAST_COMMIT_MESSAGE" value="add sound" />
+    <MESSAGE value="add springs" />
+    <option name="LAST_COMMIT_MESSAGE" value="add springs" />
   </component>
 </project>

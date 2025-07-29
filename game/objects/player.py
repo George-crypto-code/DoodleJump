@@ -22,6 +22,7 @@ class Player(pg.sprite.Sprite):  # main player class
         self.game_over_sound = pg.mixer.Sound("sounds/fall.wav")
         self.button_sound = pg.mixer.Sound("sounds/button.wav")
         self.spring_sound = pg.mixer.Sound("sounds/spring.wav")
+        self.trump_sound = pg.mixer.Sound("sounds/trampoline.wav")
 
         self.image = self.player_right
 
@@ -72,7 +73,7 @@ class Player(pg.sprite.Sprite):  # main player class
         pg.time.set_timer(pg.USEREVENT, 0)
         self.jumping = False
 
-    def update(self, platforms, springs, gravity=True):
+    def update(self, platforms, springs, trumps, gravity=True):
         if gravity:
             self.velocityY.y += self.gravity  # calculate speed with gravity
 
@@ -86,6 +87,13 @@ class Player(pg.sprite.Sprite):  # main player class
                 self.jump(k=1.5)
                 spring.active()
                 self.spring_sound.play()
+
+        for trump in trumps:
+            if (pg.sprite.collide_rect(self, trump)
+                    and trump.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                self.jump(k=2)
+                trump.active()
+                self.trump_sound.play()
 
         for platform in platforms:
             if (pg.sprite.collide_mask(self, platform)
@@ -103,6 +111,7 @@ class Player(pg.sprite.Sprite):  # main player class
         clock = pg.time.Clock()  # set time on main cycle
         all_platforms = pg.sprite.Group()
         all_springs = pg.sprite.Group()
+        all_trumps = pg.sprite.Group()
         Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
         camera = Camera()
 
@@ -212,7 +221,7 @@ class Player(pg.sprite.Sprite):  # main player class
                     play_again_button.setPosition(*play_again_button_rect)
                     menu_button.setPosition(*menu_button_rect)
                     if self.rect.y <= 610:
-                        self.update(all_platforms, all_springs, gravity=False)
+                        self.update(all_platforms, all_springs, all_trumps, gravity=False)
                         self.draw(screen)
 
                     screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
@@ -237,7 +246,7 @@ class Player(pg.sprite.Sprite):  # main player class
 
             else:
                 screen.blit(background, (0, 0))
-                set_platforms(all_platforms, all_springs, self.current_score)  # set and delete some amount of platforms
+                set_platforms(all_platforms, all_springs, all_trumps, self.current_score)  # set and delete some amount of platforms
                 # print(self.current_score)
 
                 for event in pg.event.get():  # get all events at the moment
@@ -277,9 +286,10 @@ class Player(pg.sprite.Sprite):  # main player class
                 else:
                     self.stopMoving()
 
-                self.update(all_platforms, all_springs)  # update speed and collision
+                self.update(all_platforms, all_springs, all_trumps)  # update speed and collision
                 all_platforms.draw(screen)  # draw all platforms
                 all_springs.draw(screen)
+                all_trumps.draw(screen)
                 self.draw(screen)  # draw player
 
                 camera.update(self)  # watch for player
@@ -288,8 +298,13 @@ class Player(pg.sprite.Sprite):  # main player class
 
                 for spring in all_springs:
                     camera.apply(spring)
-                    if spring.rect.midbottom[1] >= 600:
+                    if spring.rect.midbottom[1] >= 650:
                         spring.kill()
+
+                for trump in all_trumps:
+                    camera.apply(trump)
+                    if trump.rect.midbottom[1] >= 650:
+                        trump.kill()
 
                 screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
                 screen.blit(top, (0, 0))
