@@ -21,6 +21,7 @@ class Player(pg.sprite.Sprite):  # main player class
         self.unpause_sound = pg.mixer.Sound("sounds/unpause.wav")
         self.game_over_sound = pg.mixer.Sound("sounds/fall.wav")
         self.button_sound = pg.mixer.Sound("sounds/button.wav")
+        self.spring_sound = pg.mixer.Sound("sounds/spring.wav")
 
         self.image = self.player_right
 
@@ -54,13 +55,12 @@ class Player(pg.sprite.Sprite):  # main player class
             self.image = self.player_right_jump if self.jumping else self.player_right
             self.direction = True
 
-    def jump(self):
-        self.velocityY.y = STRENGTH_JUMP
+    def jump(self, k=1.0):
+        self.velocityY.y = STRENGTH_JUMP * k
         if self.direction:
             self.image = self.player_right_jump
         else:
             self.image = self.player_left_jump
-        self.jump_sound.play()
         pg.time.set_timer(pg.USEREVENT, 300)
         self.jumping = True
 
@@ -72,7 +72,7 @@ class Player(pg.sprite.Sprite):  # main player class
         pg.time.set_timer(pg.USEREVENT, 0)
         self.jumping = False
 
-    def update(self, platforms, gravity=True):
+    def update(self, platforms, springs, gravity=True):
         if gravity:
             self.velocityY.y += self.gravity  # calculate speed with gravity
 
@@ -80,10 +80,18 @@ class Player(pg.sprite.Sprite):  # main player class
             self.velocityY.y = 20
         self.pos += self.velocityX  # calculate pos
 
+        for spring in springs:
+            if (pg.sprite.collide_rect(self, spring)
+                    and spring.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                self.jump(k=1.5)
+                spring.active()
+                self.spring_sound.play()
+
         for platform in platforms:
-            if (pg.sprite.collide_mask(self, platform) and
-                    platform.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+            if (pg.sprite.collide_mask(self, platform)
+                    and platform.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
                 self.jump()
+                self.jump_sound.play()
 
         self.rect.center = self.pos  # set player model on the new place
         self.rect.centerx %= WIGHT
@@ -94,6 +102,7 @@ class Player(pg.sprite.Sprite):  # main player class
     def running(self, screen):
         clock = pg.time.Clock()  # set time on main cycle
         all_platforms = pg.sprite.Group()
+        all_springs = pg.sprite.Group()
         Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
         camera = Camera()
 
@@ -203,7 +212,7 @@ class Player(pg.sprite.Sprite):  # main player class
                     play_again_button.setPosition(*play_again_button_rect)
                     menu_button.setPosition(*menu_button_rect)
                     if self.rect.y <= 610:
-                        self.update(all_platforms, gravity=False)
+                        self.update(all_platforms, all_springs, gravity=False)
                         self.draw(screen)
 
                     screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
@@ -228,7 +237,8 @@ class Player(pg.sprite.Sprite):  # main player class
 
             else:
                 screen.blit(background, (0, 0))
-                set_platforms(all_platforms)  # set and delete some amount of platforms
+                set_platforms(all_platforms, all_springs, self.current_score)  # set and delete some amount of platforms
+                # print(self.current_score)
 
                 for event in pg.event.get():  # get all events at the moment
                     if event.type == pg.QUIT:  # if user click on close button
@@ -267,13 +277,19 @@ class Player(pg.sprite.Sprite):  # main player class
                 else:
                     self.stopMoving()
 
-                self.update(all_platforms)  # update speed and collision
+                self.update(all_platforms, all_springs)  # update speed and collision
                 all_platforms.draw(screen)  # draw all platforms
+                all_springs.draw(screen)
                 self.draw(screen)  # draw player
 
                 camera.update(self)  # watch for player
                 for platform in all_platforms:
                     camera.apply(platform)
+
+                for spring in all_springs:
+                    camera.apply(spring)
+                    if spring.rect.midbottom[1] >= 600:
+                        spring.kill()
 
                 screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
                 screen.blit(top, (0, 0))
