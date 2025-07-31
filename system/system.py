@@ -5,6 +5,7 @@ import pygame as pg
 from game.objects.platform import Platform
 from game.objects.spring import Spring
 from game.objects.trump import Trump
+from game.objects.propeller import Propeller
 from system.settings import *
 
 
@@ -23,7 +24,7 @@ def get_top(path):
     return pg.transform.scale(image, (WIGHT, image.get_height() * (WIGHT / image.get_width())))
 
 
-def set_platforms(all_platforms, all_springs, all_trumps, score):
+def set_platforms(all_platforms, all_springs, all_trumps, all_propellers, score):
     score = abs(int(score))
     for platform in all_platforms:
         if platform.rect.centery >= HEIGHT + 50:
@@ -54,6 +55,15 @@ def set_platforms(all_platforms, all_springs, all_trumps, score):
                 x = randint(3, WIGHT - 60)
                 current_platform.setPlatform(x, y)
                 spring.setPosition(x + 28, y + 3)
+
+        elif score > 10 and 0 <= score % 50 <= 2:
+            propeller = Propeller(all_propellers)
+            propeller.setPosition(x + 28, y + 3)
+
+            while not (current_platform.checkCollide(all_platforms) and propeller.checkCollide(all_platforms)):
+                x = randint(3, WIGHT - 60)
+                current_platform.setPlatform(x, y)
+                propeller.setPosition(x + 28, y + 3)
         else:
             while not current_platform.checkCollide(all_platforms):
                 x = randint(3, WIGHT - 60)

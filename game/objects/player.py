@@ -23,6 +23,7 @@ class Player(pg.sprite.Sprite):  # main player class
         self.button_sound = pg.mixer.Sound("sounds/button.wav")
         self.spring_sound = pg.mixer.Sound("sounds/spring.wav")
         self.trump_sound = pg.mixer.Sound("sounds/trampoline.wav")
+        self.propeller_sound = pg.mixer.Sound("sounds/propeller.wav")
 
         self.image = self.player_right
 
@@ -37,6 +38,7 @@ class Player(pg.sprite.Sprite):  # main player class
 
         self.direction = True  # direction for picture
         self.jumping = False  # flag for jump
+        self.propeller = False
         self.current_score, self.max_score = 0, 0
 
     def movingLeft(self):  # moving while pressed A
@@ -73,13 +75,28 @@ class Player(pg.sprite.Sprite):  # main player class
         pg.time.set_timer(pg.USEREVENT, 0)
         self.jumping = False
 
-    def update(self, platforms, springs, trumps, gravity=True):
+    def fly(self):
+        self.propeller = True
+        pg.time.set_timer(pg.USEREVENT, 3000)
+        self.velocityY.y = -10
+
+    def stopFly(self):
+        self.propeller = False
+        pg.time.set_timer(pg.USEREVENT, 0)
+        self.velocityY.y = 0
+
+    def update(self, platforms, springs, trumps, propellers, gravity=True):
         if gravity:
             self.velocityY.y += self.gravity  # calculate speed with gravity
 
         if self.velocityY.y >= 20:
             self.velocityY.y = 20
         self.pos += self.velocityX  # calculate pos
+
+        for propeller in propellers:
+            if pg.sprite.collide_rect(self, propeller):
+                self.fly()
+                self.propeller_sound.play()
 
         for spring in springs:
             if (pg.sprite.collide_rect(self, spring)
@@ -112,6 +129,7 @@ class Player(pg.sprite.Sprite):  # main player class
         all_platforms = pg.sprite.Group()
         all_springs = pg.sprite.Group()
         all_trumps = pg.sprite.Group()
+        all_propellers = pg.sprite.Group()
         Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
         camera = Camera()
 
@@ -221,7 +239,7 @@ class Player(pg.sprite.Sprite):  # main player class
                     play_again_button.setPosition(*play_again_button_rect)
                     menu_button.setPosition(*menu_button_rect)
                     if self.rect.y <= 610:
-                        self.update(all_platforms, all_springs, all_trumps, gravity=False)
+                        self.update(all_platforms, all_springs, all_trumps, all_propellers, gravity=False)
                         self.draw(screen)
 
                     screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
@@ -246,14 +264,15 @@ class Player(pg.sprite.Sprite):  # main player class
 
             else:
                 screen.blit(background, (0, 0))
-                set_platforms(all_platforms, all_springs, all_trumps, self.current_score)  # set and delete some amount of platforms
+                set_platforms(all_platforms, all_springs, all_trumps, all_propellers, self.current_score)  # set and delete some amount of platforms
                 # print(self.current_score)
 
                 for event in pg.event.get():  # get all events at the moment
                     if event.type == pg.QUIT:  # if user click on close button
                         return "quit"
                     if event.type == pg.USEREVENT:
-                        self.stopJump()  # event for stop jumping animation
+                        self.stopJump()
+                        self.stopFly()
                     if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                         if pause_button.click():
                             pause_flag = True
@@ -286,10 +305,12 @@ class Player(pg.sprite.Sprite):  # main player class
                 else:
                     self.stopMoving()
 
-                self.update(all_platforms, all_springs, all_trumps)  # update speed and collision
+                if not self.propeller:
+                    self.update(all_platforms, all_springs, all_trumps, all_propellers)  # update speed and collision
                 all_platforms.draw(screen)  # draw all platforms
                 all_springs.draw(screen)
                 all_trumps.draw(screen)
+                all_propellers.draw(screen)
                 self.draw(screen)  # draw player
 
                 camera.update(self)  # watch for player
@@ -305,6 +326,11 @@ class Player(pg.sprite.Sprite):  # main player class
                     camera.apply(trump)
                     if trump.rect.midbottom[1] >= 650:
                         trump.kill()
+
+                for propeller in all_propellers:
+                    camera.apply(propeller)
+                    if propeller.rect.midbottom[1] >= 650:
+                        propeller.kill()
 
                 screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
                 screen.blit(top, (0, 0))
