@@ -20,8 +20,3 @@ class Trump(pg.sprite.Sprite):
         a = self.rect.midbottom
         self.rect = self.active_image_rect
         self.rect.midbottom = a
-
-    def checkCollide(self, platforms):
-        if len(pg.sprite.spritecollide(self, platforms, False)) <= 1:
-            return True
-        return False

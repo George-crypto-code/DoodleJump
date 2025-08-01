@@ -1,62 +1,57 @@
-import pygame as pg  # main library
-from collections import OrderedDict
-
-from .camera import Camera
-from system.settings import WIGHT, HEIGHT, GRAVITY, SPEED, STRENGTH_JUMP
-from game.objects.platform import Platform
-from system.system import get_background, get_bottom, get_top, set_platforms, show_score, show_mini_score
-from system.button import Button
+import pygame as pg
+from config.settings import WIGHT, GRAVITY, SPEED, STRENGTH_JUMP
 
 
-class Player(pg.sprite.Sprite):  # main player class
+class Player(pg.sprite.Sprite):
     def __init__(self):
-        super().__init__()  # inherit methods from sprite
-        self.player_right = pg.image.load("game/images/player/player_right.png")  # save image
+        super().__init__()
+        self.player_right = pg.image.load("game/images/player/player_right.png")
         self.player_right_jump = pg.image.load("game/images/player/player_right_jump.png")
         self.player_left = pg.image.load("game/images/player/player_left.png")
         self.player_left_jump = pg.image.load("game/images/player/player_left_jump.png")
 
         self.jump_sound = pg.mixer.Sound("sounds/jump.wav")
-        self.pause_sound = pg.mixer.Sound("sounds/pause.wav")
-        self.unpause_sound = pg.mixer.Sound("sounds/unpause.wav")
-        self.game_over_sound = pg.mixer.Sound("sounds/fall.wav")
-        self.button_sound = pg.mixer.Sound("sounds/button.wav")
         self.spring_sound = pg.mixer.Sound("sounds/spring.wav")
         self.trump_sound = pg.mixer.Sound("sounds/trampoline.wav")
         self.propeller_sound = pg.mixer.Sound("sounds/propeller.wav")
 
         self.image = self.player_right
 
-        self.rect = self.image.get_rect()  # get rect of player image
+        self.rect = self.image.get_rect()
         self.mask = pg.mask.from_surface(self.image)
 
-        self.pos = pg.Vector2(100.0, 355.0)  # extra field for moving on coordinates
-        self.velocityY = pg.Vector2(0.0, STRENGTH_JUMP)  # start speed on Oy
-        self.velocityX = pg.Vector2(0.0, 0.0)  # start speed on Ox
-        self.gravity = GRAVITY  # force of gravity
-        self.rect.center = self.pos  # set player model on start
+        self.pos = pg.Vector2(100.0, 355.0)
+        self.velocityY = pg.Vector2(0.0, STRENGTH_JUMP)
+        self.velocityX = pg.Vector2(0.0, 0.0)
+        self.gravity = GRAVITY
+        self.rect.center = self.getPos()
 
-        self.direction = True  # direction for picture
-        self.jumping = False  # flag for jump
+        self.direction = True
+        self.jumping = False
         self.propeller = False
-        self.current_score, self.max_score = 0, 0
 
-    def movingLeft(self):  # moving while pressed A
+    def movingLeft(self):
         self.velocityX.x = -SPEED
 
-    def stopMoving(self):  # stop moving on Ox
+    def stopMoving(self):
         self.velocityX.x = 0
 
-    def movingRight(self):  # moving while pressed D
+    def movingRight(self):
         self.velocityX.x = SPEED
 
-    def setDirection(self, direction):  # change image depending on moving
+    def setDirection(self, direction):
         if direction == "left":
             self.image = self.player_left_jump if self.jumping else self.player_left
             self.direction = False
         elif direction == "right":
             self.image = self.player_right_jump if self.jumping else self.player_right
             self.direction = True
+
+    def setVelocityX(self, value):
+        self.velocityX.x = value
+
+    def setVelocityY(self, value):
+        self.velocityY.y = value
 
     def jump(self, k=1.0):
         self.velocityY.y = STRENGTH_JUMP * k
@@ -75,277 +70,68 @@ class Player(pg.sprite.Sprite):  # main player class
         pg.time.set_timer(pg.USEREVENT, 0)
         self.jumping = False
 
-    def fly(self):
-        self.propeller = True
-        pg.time.set_timer(pg.USEREVENT, 3000)
-        self.velocityY.y = -10
-
-    def stopFly(self):
-        self.propeller = False
-        pg.time.set_timer(pg.USEREVENT, 0)
-        self.velocityY.y = 0
-
     def update(self, platforms, springs, trumps, propellers, gravity=True):
-        if gravity:
-            self.velocityY.y += self.gravity  # calculate speed with gravity
+        if self.propeller:
+            for propeller in propellers:
+                propeller.update()
+                propeller.setPosition(self.rect.x + 31 + self.velocityX.x, self.rect.y + 25)
+        else:
+            if gravity:
+                self.velocityY.y += self.gravity
 
-        if self.velocityY.y >= 20:
-            self.velocityY.y = 20
-        self.pos += self.velocityX  # calculate pos
+            velocity_y = self.velocityY.y
+            if velocity_y > 20:
+                self.velocityY.y = 20
 
-        for propeller in propellers:
-            if pg.sprite.collide_rect(self, propeller):
-                self.fly()
-                self.propeller_sound.play()
+            for spring in springs:
+                if (pg.sprite.collide_rect(self, spring)
+                        and spring.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                    self.jump(k=1.5)
+                    spring.active()
+                    self.spring_sound.play()
 
-        for spring in springs:
-            if (pg.sprite.collide_rect(self, spring)
-                    and spring.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
-                self.jump(k=1.5)
-                spring.active()
-                self.spring_sound.play()
+            for trump in trumps:
+                if (pg.sprite.collide_rect(self, trump)
+                        and trump.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                    self.jump(k=2)
+                    trump.active()
+                    self.trump_sound.play()
 
-        for trump in trumps:
-            if (pg.sprite.collide_rect(self, trump)
-                    and trump.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
-                self.jump(k=2)
-                trump.active()
-                self.trump_sound.play()
+            for propeller in propellers:
+                if pg.sprite.collide_rect(self, propeller):
+                    self.propeller = True
+                    self.velocityY.y = -10
+                    self.propeller_sound.play()
+                    pg.time.set_timer(pg.USEREVENT + 1, 2700)
 
-        for platform in platforms:
-            if (pg.sprite.collide_mask(self, platform)
-                    and platform.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
-                self.jump()
-                self.jump_sound.play()
+            for platform in platforms:
+                if (pg.sprite.collide_mask(self, platform)
+                        and platform.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                    self.jump()
+                    self.jump_sound.play()
 
-        self.rect.center = self.pos  # set player model on the new place
+        self.pos += self.velocityX
+        self.rect.center = self.getPos()
         self.rect.centerx %= WIGHT
+
+    def falling(self):
+        self.pos += self.velocityY
+        self.rect.center = self.getPos()
+
+    def propellerStop(self, propellers):
+        self.propeller = False
+        for propeller in propellers:
+            propeller.kill()
+        pg.time.set_timer(pg.USEREVENT + 1, 0)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def running(self, screen):
-        clock = pg.time.Clock()  # set time on main cycle
-        all_platforms = pg.sprite.Group()
-        all_springs = pg.sprite.Group()
-        all_trumps = pg.sprite.Group()
-        all_propellers = pg.sprite.Group()
-        Platform(all_platforms).setPlatform(70, 450)  # start platform will always place here
-        camera = Camera()
+    def getCurrentSpeedX(self):
+        return self.velocityX.x
 
-        pause_flag = False
-        game_over_flag = False
-        pause_button = Button()
-        pause_button.setImage("game/images/buttons/pause.png", "game/images/buttons/pause_hover.png")
-        pause_button.setPosition(350, 17)
-        pause_button.setSignal("pause")
+    def getCurrentSpeedY(self):
+        return self.velocityY.y
 
-        menu_button = Button()
-        menu_button.setImage("game/images/buttons/menu.png", "game/images/buttons/menu_hover.png")
-        menu_button.setPosition(300, 460)
-        menu_button.setSignal("menu")
-
-        play_again_button = Button()
-        play_again_button.setImage("game/images/buttons/play_again.png", "game/images/buttons/play_again_hover.png")
-        play_again_button.setPosition(120, 400)
-        play_again_button.setSignal("play")
-
-        background = get_background("game/images/background/background.png")
-        bottom = get_bottom("game/images/background/bottom.png")
-        top = get_top("game/images/background/top.png")
-        pause_background = get_background("game/images/background/pause_background.png")
-
-        pressed_keys = OrderedDict()
-        with open("system/best_score.txt") as file:
-            line = file.readline()
-        BEST_SCORE = int(line) if line else 0
-
-        while True:
-
-            if pause_flag:
-                screen.blit(pause_background, (0, 0))
-                for event in pg.event.get():
-                    if event.type == pg.QUIT:
-                        return "quit"
-                    if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                        if pause_button.click():
-                            pause_flag = False
-                            self.unpause_sound.play()
-                            break
-                        if signal := play_again_button.click():
-                            self.button_sound.play()
-                            return signal
-                        if signal := menu_button.click():
-                            self.button_sound.play()
-                            return signal
-
-                screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
-                screen.blit(top, (0, 0))
-                show_score(screen, self.max_score)
-
-                pause_button.update()
-                pause_button.draw(screen)
-
-                menu_button.update()
-                menu_button.draw(screen)
-
-                play_again_button.update()
-                play_again_button.draw(screen)
-
-                pg.display.flip()
-                clock.tick(60)
-
-            elif game_over_flag:
-                menu_button_rect = [270, 500 + 600]
-                play_again_button_rect = [120, 500 + 600]
-
-                game_over = pg.image.load("game/images/background/game_over.png")
-                game_over_rect = [50, 200 + 600]
-
-                your_score = pg.image.load("game/images/background/your_score.png")
-                your_score_rect = [75, 350 + 600]
-
-                your_high_score = pg.image.load("game/images/background/your_high_score.png")
-                your_high_score_rect = [40, 400 + 600]
-
-                score_rect = [225, 350 + 600]
-                best_score_rect = [230, 410 + 600]
-
-                all_objects = [game_over_rect, your_score_rect, your_high_score_rect, menu_button_rect,
-                               play_again_button_rect, score_rect, best_score_rect]
-
-                self.velocityX.x = 0
-
-                while True:
-                    screen.blit(background, (0, 0))
-
-                    for event in pg.event.get():
-                        if event.type == pg.QUIT:
-                            return "quit"
-                        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                            if signal := play_again_button.click():
-                                self.button_sound.play()
-                                return signal
-                            if signal := menu_button.click():
-                                self.button_sound.play()
-                                return signal
-
-                    if your_high_score_rect[1] <= self.rect.y:
-                        self.pos += self.velocityY
-                    else:
-                        for obj in all_objects:
-                            obj[1] -= self.velocityY.y
-
-                    play_again_button.setPosition(*play_again_button_rect)
-                    menu_button.setPosition(*menu_button_rect)
-                    if self.rect.y <= 610:
-                        self.update(all_platforms, all_springs, all_trumps, all_propellers, gravity=False)
-                        self.draw(screen)
-
-                    screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
-                    screen.blit(top, (0, 0))
-                    show_score(screen, self.max_score)
-
-                    play_again_button.update()
-                    menu_button.update()
-                    pause_button.draw(screen)
-                    play_again_button.draw(screen)
-                    menu_button.draw(screen)
-
-                    screen.blit(game_over, game_over_rect)
-                    screen.blit(your_score, your_score_rect)
-                    screen.blit(your_high_score, your_high_score_rect)
-
-                    show_mini_score(screen, self.max_score, score_rect)
-                    show_mini_score(screen, BEST_SCORE, best_score_rect)
-
-                    pg.display.flip()
-                    clock.tick(60)
-
-            else:
-                screen.blit(background, (0, 0))
-                set_platforms(all_platforms, all_springs, all_trumps, all_propellers, self.current_score)  # set and delete some amount of platforms
-                # print(self.current_score)
-
-                for event in pg.event.get():  # get all events at the moment
-                    if event.type == pg.QUIT:  # if user click on close button
-                        return "quit"
-                    if event.type == pg.USEREVENT:
-                        self.stopJump()
-                        self.stopFly()
-                    if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                        if pause_button.click():
-                            pause_flag = True
-                            self.pause_sound.play()
-
-                if self.velocityY.y >= 20:
-                    game_over_flag = True
-                    self.game_over_sound.play()
-
-                keys = pg.key.get_pressed()
-
-                if keys[pg.K_d]:
-                    pressed_keys["d"] = True
-                else:
-                    pressed_keys.pop("d", None)
-
-                if keys[pg.K_a]:
-                    pressed_keys["a"] = True
-                else:
-                    pressed_keys.pop("a", None)
-
-                if pressed_keys:
-                    current_key = next(reversed(pressed_keys))
-                    if current_key == "d":
-                        self.setDirection("right")
-                        self.movingRight()
-                    else:
-                        self.setDirection("left")
-                        self.movingLeft()
-                else:
-                    self.stopMoving()
-
-                if not self.propeller:
-                    self.update(all_platforms, all_springs, all_trumps, all_propellers)  # update speed and collision
-                all_platforms.draw(screen)  # draw all platforms
-                all_springs.draw(screen)
-                all_trumps.draw(screen)
-                all_propellers.draw(screen)
-                self.draw(screen)  # draw player
-
-                camera.update(self)  # watch for player
-                for platform in all_platforms:
-                    camera.apply(platform)
-
-                for spring in all_springs:
-                    camera.apply(spring)
-                    if spring.rect.midbottom[1] >= 650:
-                        spring.kill()
-
-                for trump in all_trumps:
-                    camera.apply(trump)
-                    if trump.rect.midbottom[1] >= 650:
-                        trump.kill()
-
-                for propeller in all_propellers:
-                    camera.apply(propeller)
-                    if propeller.rect.midbottom[1] >= 650:
-                        propeller.kill()
-
-                screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
-                screen.blit(top, (0, 0))
-
-                self.current_score += self.velocityY.y / 10
-                if self.current_score < self.max_score:
-                    self.max_score = self.current_score
-                    if (a := int(abs(self.max_score))) > BEST_SCORE:
-                        BEST_SCORE = self.max_score
-                        with open("system/best_score.txt", mode="w") as file:
-                            file.write(str(a))
-                show_score(screen, self.max_score)
-
-                pause_button.update()
-                pause_button.draw(screen)
-
-                pg.display.flip()  # change display picture
-                clock.tick(60)  # set fps
+    def getPos(self):
+        return int(self.pos.x), int(self.pos.y)

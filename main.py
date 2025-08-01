@@ -1,20 +1,20 @@
-from game.objects.player import Player  # doodle jump player model
+from game.objects.main_game import main_game
 from menu.objects.main_menu import MainMenu
 from options.objects.options import Options
-from system.system import *
+from config.system import *
 
 
 def main():
-    pg.init()  # pg initialization
+    pg.init()
     pg.mixer.init()
-    size = WIGHT, HEIGHT  # window size
-    screen = pg.display.set_mode(size)  # set siz on window
+    size = WIGHT, HEIGHT
+    screen = pg.display.set_mode(size)
 
     player_running = False
     menu_running = True
     options_running = False
 
-    while True:  # main cycle
+    while True:
 
         if menu_running:
             menu = MainMenu()
@@ -31,8 +31,7 @@ def main():
                 break
 
         if player_running:
-            player = Player()
-            res = player.running(screen)
+            res = main_game(screen)
             if res == "play":
                 player_running = True
                 menu_running = False
@@ -54,8 +53,7 @@ def main():
             else:
                 break
 
-
-    pg.quit()  # turn off pygame
+    pg.quit()
 
 
 if __name__ == "__main__":

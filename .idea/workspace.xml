@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="add springs">
+    <list default="true" id="f2f13061-fd1f-42b3-9116-c77da6c49c8a" name="Changes" comment="_">
+      <change afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/system.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/objects/main_game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/objects/platform.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/platform.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/objects/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds/thump.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/best_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/system/best_score.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/system/system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/objects/propeller.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/propeller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/objects/spring.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/spring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/objects/trump.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/objects/trump.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/objects/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/objects/main_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/options/objects/options.py" beforeDir="false" afterPath="$PROJECT_DIR$/options/objects/options.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/best_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config/best_score.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/system.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,21 +57,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.player.executor&quot;: &quot;Run&quot;,
-    &quot;Python.settings.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Acer/PycharmProjects/DoodleJump/options/images/buttons&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.game.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.main_game.executor": "Run",
+    "Python.player.executor": "Run",
+    "Python.settings.executor": "Run",
+    "Python.system.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/Acer/PycharmProjects/DoodleJump/options/images/buttons",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Acer\PycharmProjects\DoodleJump\options\images\buttons" />
@@ -188,7 +202,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753778179215</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add trampoline">
+      <option name="closed" value="true" />
+      <created>1753796827450</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1753796827450</updated>
+    </task>
+    <task id="LOCAL-00014" summary="_">
+      <option name="closed" value="true" />
+      <created>1753978861027</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753978861027</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -204,6 +234,8 @@
     <MESSAGE value="add options screen" />
     <MESSAGE value="add sound" />
     <MESSAGE value="add springs" />
-    <option name="LAST_COMMIT_MESSAGE" value="add springs" />
+    <MESSAGE value="add trampoline" />
+    <MESSAGE value="_" />
+    <option name="LAST_COMMIT_MESSAGE" value="_" />
   </component>
 </project>

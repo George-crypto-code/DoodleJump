@@ -1,7 +1,7 @@
 import pygame as pg
 
-from system.button import Button
-from system.system import get_background
+from config.button import Button
+from config.system import get_background
 
 
 class Options:
