@@ -16,6 +16,8 @@ def main_game(screen):
     all_springs = pg.sprite.Group()
     all_trumps = pg.sprite.Group()
     all_propellers = pg.sprite.Group()
+    all_jetpacks = pg.sprite.Group()
+    all_monsters = pg.sprite.Group()
     set_platforms(all_platforms)
     camera = Camera()
     player = Player()
@@ -160,7 +162,7 @@ def main_game(screen):
                 clock.tick(60)
         else:
             screen.blit(background, (0, 0))
-            current_score += update_platforms(all_platforms, all_springs, all_trumps, all_propellers, current_score)
+            current_score += update_platforms(all_platforms, all_springs, all_trumps, all_propellers, all_jetpacks, all_monsters, current_score)
 
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -171,6 +173,9 @@ def main_game(screen):
 
                 if event.type == pg.USEREVENT + 1:
                     player.propellerStop(all_propellers)
+
+                if event.type == pg.USEREVENT + 2:
+                    player.jetpackStop(all_jetpacks)
 
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     if pause_button.click():
@@ -204,10 +209,14 @@ def main_game(screen):
             else:
                 player.stopMoving()
 
-            player.update(all_platforms, all_springs, all_trumps, all_propellers, screen)
+            player.update(all_platforms, all_springs, all_trumps, all_propellers, all_jetpacks, all_monsters, screen)
+            all_platforms.update()
+            all_monsters.update()
             all_platforms.draw(screen)
             all_springs.draw(screen)
             all_trumps.draw(screen)
+            all_jetpacks.draw(screen)
+            all_monsters.draw(screen)
             player.draw(screen)
             all_propellers.draw(screen)
 
@@ -229,6 +238,16 @@ def main_game(screen):
                 camera.apply(propeller)
                 if propeller.rect.midbottom[1] >= 660:
                     propeller.kill()
+
+            for jetpack in all_jetpacks:
+                camera.apply(jetpack)
+                if jetpack.rect.midbottom[1] >= 660:
+                    jetpack.kill()
+
+            for monster in all_monsters:
+                camera.apply(monster)
+                if monster.rect.midbottom[1] >= 660:
+                    monster.kill()
 
             screen.blit(bottom, (0, HEIGHT - bottom.get_height()))
             screen.blit(top, (0, 0))

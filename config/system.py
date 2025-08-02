@@ -2,7 +2,9 @@ from random import randint
 
 import pygame as pg
 
-from game.objects.platform import Platform
+from game.objects.jetpack import Jetpack
+from game.objects.monster import Monster
+from game.objects.platform import Platform, MovingPlatform, BreakingPlatform
 from game.objects.spring import Spring
 from game.objects.trump import Trump
 from game.objects.propeller import Propeller
@@ -32,7 +34,7 @@ def set_platforms(all_platforms):
         current_platform.setPlatform(x, y)
 
 
-def update_platforms(all_platforms, all_springs, all_trumps, all_propellers, score):
+def update_platforms(all_platforms, all_springs, all_trumps, all_propellers, all_jetpacks, all_monsters, score):
     lowest_platform = highest_platform = None
     for platform in all_platforms:
         if lowest_platform is None or platform.rect.y > lowest_platform.rect.y:
@@ -42,21 +44,41 @@ def update_platforms(all_platforms, all_springs, all_trumps, all_propellers, sco
 
     if lowest_platform.rect.y >= HEIGHT + 60:
         all_platforms.remove(lowest_platform)
-        current_platform = Platform(all_platforms)
-        x = randint(3, WIGHT - 60)
-        y = highest_platform.rect.y - 60
 
-        if score % 13 == 0:
-            spring = Spring(all_springs)
-            spring.setPosition(x + 28, y + 2)
+        if score % 233 == 0:
+            x = 250
+            y = highest_platform.rect.y - 60
+            monster = Monster(all_monsters)
+            monster.setPosition(10, y)
+            current_platform = Platform(all_platforms)
+        elif score >= 200 and randint(1, 5) == 3:
+            current_platform = MovingPlatform(1, all_platforms)
+            x = randint(3, WIGHT - 60)
+            y = highest_platform.rect.y - 60
+        # elif score % 10 == 0:
+        #     current_platform = BreakingPlatform(all_platforms)
+        #     x = randint(3, WIGHT - 60)
+        #     y = highest_platform.rect.y - 60
+        else:
+            current_platform = Platform(all_platforms)
+            x = randint(3, WIGHT - 60)
+            y = highest_platform.rect.y - 60
 
-        if score and score % 31 == 0:
-            trump = Trump(all_trumps)
-            trump.setPosition(x + 28, y + 2)
+            if score % 13 == 0:
+                spring = Spring(all_springs)
+                spring.setPosition(x + 28, y + 2)
 
-        if score and score % 97 == 0:
-            propeller = Propeller(all_propellers)
-            propeller.setPosition(x + 28, y + 2)
+            if score and score % 31 == 0:
+                trump = Trump(all_trumps)
+                trump.setPosition(x + 28, y + 2)
+
+            if score and score % 97 == 0:
+                propeller = Propeller(all_propellers)
+                propeller.setPosition(x + 28, y + 2)
+
+            if score and score % 191 == 0:
+                jetpack = Jetpack(all_jetpacks)
+                jetpack.setPosition(x + 28, y + 2)
 
         current_platform.setPlatform(x, y)
         return 1

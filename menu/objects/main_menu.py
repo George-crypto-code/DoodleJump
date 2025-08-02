@@ -6,59 +6,50 @@ from menu.objects.menu_platform import MenuPlatform
 from menu.objects.ufo import UFO
 
 
-class MainMenu:
-    def __init__(self):
-        self.background = get_background("menu/images/background/main_menu_background.png")
-        self.play_button = Button()
-        self.play_button.setImage("menu/images/button/play.png", "menu/images/button/play_hover.png")
-        self.play_button.setSignal("play")
-        self.options_button = Button()
-        self.options_button.setImage("menu/images/button/options.png", "menu/images/button/options_hover.png")
-        self.options_button.setSignal("options")
+def main_menu(screen):
+    background = get_background("menu/images/background/main_menu_background.png")
+    play_button = Button()
+    play_button.setImage("menu/images/button/play.png", "menu/images/button/play_hover.png")
+    play_button.setSignal("play")
+    options_button = Button()
+    options_button.setImage("menu/images/button/options.png", "menu/images/button/options_hover.png")
+    options_button.setSignal("options")
 
-    def update(self):
-        self.play_button.update()
-        self.options_button.update()
+    play_button.setPosition(140, 200)
+    options_button.setPosition(140, 270)
 
-    def draw(self, screen):
-        self.play_button.draw(screen)
-        self.options_button.draw(screen)
+    clock = pg.time.Clock()
+    player = MenuPlayer()
+    ufo = UFO()
+    all_platforms = pg.sprite.Group()
+    platform = MenuPlatform(all_platforms)
+    platform.setPlatform(80, 450)
+    sound = pg.mixer.Sound("sounds/button.wav")
 
-    def run(self, screen):
-        self.play_button.setPosition(140, 200)
-        self.options_button.setPosition(140, 270)
+    while True:
 
-        clock = pg.time.Clock()
-        player = MenuPlayer()
-        ufo = UFO()
-        all_platforms = pg.sprite.Group()
-        platform = MenuPlatform(all_platforms)
-        platform.setPlatform(80, 450)
-        sound = pg.mixer.Sound("sounds/button.wav")
+        for event in pg.event.get():
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                return "quit"
+            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                if signal := play_button.click():
+                    sound.play()
+                    return signal
+                if signal := options_button.click():
+                    sound.play()
+                    return signal
+            if event.type == pg.USEREVENT:
+                player.stopJump()
 
-        while True:
-
-            for event in pg.event.get():
-                if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                    return "quit"
-                if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                    if signal := self.play_button.click():
-                        sound.play()
-                        return signal
-                    if signal := self.options_button.click():
-                        sound.play()
-                        return signal
-                if event.type == pg.USEREVENT:
-                    player.stopJump()
-
-            screen.blit(self.background, (0, 0))
-            self.update()
-            self.draw(screen)
-            player.update(all_platforms)
-            player.draw(screen)
-            all_platforms.draw(screen)
-            ufo.update()
-            ufo.draw(screen)
-            pg.display.flip()
-            clock.tick(60)
-
+        screen.blit(background, (0, 0))
+        play_button.update()
+        options_button.update()
+        play_button.draw(screen)
+        options_button.draw(screen)
+        player.update(all_platforms)
+        player.draw(screen)
+        all_platforms.draw(screen)
+        ufo.update()
+        ufo.draw(screen)
+        pg.display.flip()
+        clock.tick(60)

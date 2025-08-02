@@ -1,6 +1,6 @@
 from game.objects.main_game import main_game
-from menu.objects.main_menu import MainMenu
-from options.objects.options import Options
+from menu.objects.main_menu import main_menu
+from options.objects.options import options
 from config.system import *
 
 
@@ -17,8 +17,7 @@ def main():
     while True:
 
         if menu_running:
-            menu = MainMenu()
-            res = menu.run(screen)
+            res = main_menu(screen)
             if res == "play":
                 player_running = True
                 menu_running = False
@@ -44,8 +43,7 @@ def main():
                 break
 
         if options_running:
-            options = Options()
-            res = options.running(screen)
+            res = options(screen)
             if res == "menu":
                 player_running = False
                 menu_running = True

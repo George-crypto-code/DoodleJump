@@ -1,5 +1,6 @@
 import pygame as pg
 from config.settings import WIGHT, GRAVITY, SPEED, STRENGTH_JUMP
+from game.objects.platform import BreakingPlatform
 
 
 class Player(pg.sprite.Sprite):
@@ -14,6 +15,8 @@ class Player(pg.sprite.Sprite):
         self.spring_sound = pg.mixer.Sound("sounds/spring.wav")
         self.trump_sound = pg.mixer.Sound("sounds/trampoline.wav")
         self.propeller_sound = pg.mixer.Sound("sounds/propeller.wav")
+        self.jetpack_sound = pg.mixer.Sound("sounds/jetpack.wav")
+        self.break_sound = pg.mixer.Sound("sounds/break.wav")
 
         self.image = self.player_right
 
@@ -28,7 +31,9 @@ class Player(pg.sprite.Sprite):
 
         self.direction = True
         self.jumping = False
-        self.propeller = False
+        self.propeller_flag = False
+        self.jetpack_flag = False
+        self.stan = False
 
     def movingLeft(self):
         self.velocityX.x = -SPEED
@@ -70,11 +75,27 @@ class Player(pg.sprite.Sprite):
         pg.time.set_timer(pg.USEREVENT, 0)
         self.jumping = False
 
-    def update(self, platforms, springs, trumps, propellers, gravity=True):
-        if self.propeller:
+    def update(self, platforms, springs, trumps, propellers, jetpacks, monsters, gravity=True):
+        if self.propeller_flag:
             for propeller in propellers:
                 propeller.update()
                 propeller.setPosition(self.rect.x + 31 + self.velocityX.x, self.rect.y + 25)
+            self.pos += self.velocityX
+            self.rect.center = self.getPos()
+            self.rect.centerx %= WIGHT
+        elif self.jetpack_flag:
+            for jetpack in jetpacks:
+                jetpack.update()
+
+                if self.direction:
+                    jetpack.image = pg.transform.flip(jetpack.image, 1, 0)
+                    dx, dy = 11, 80
+                else:
+                    dx, dy = 50, 80
+                jetpack.setPosition(self.rect.x + dx + self.velocityX.x, self.rect.y + dy)
+            self.pos += self.velocityX
+            self.rect.center = self.getPos()
+            self.rect.centerx %= WIGHT
         else:
             if gravity:
                 self.velocityY.y += self.gravity
@@ -83,46 +104,64 @@ class Player(pg.sprite.Sprite):
             if velocity_y > 20:
                 self.velocityY.y = 20
 
-            for spring in springs:
-                if (pg.sprite.collide_rect(self, spring)
-                        and spring.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
-                    self.jump(k=1.5)
-                    spring.active()
-                    self.spring_sound.play()
+            if not self.stan:
+                for spring in springs:
+                    if (pg.sprite.collide_rect(self, spring)
+                            and spring.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                        self.jump(k=1.5)
+                        spring.active()
+                        self.spring_sound.play()
 
-            for trump in trumps:
-                if (pg.sprite.collide_rect(self, trump)
-                        and trump.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
-                    self.jump(k=2)
-                    trump.active()
-                    self.trump_sound.play()
+                for trump in trumps:
+                    if (pg.sprite.collide_rect(self, trump)
+                            and trump.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                        self.jump(k=2)
+                        trump.active()
+                        self.trump_sound.play()
 
-            for propeller in propellers:
-                if pg.sprite.collide_rect(self, propeller):
-                    self.propeller = True
-                    self.velocityY.y = -10
-                    self.propeller_sound.play()
-                    pg.time.set_timer(pg.USEREVENT + 1, 2700)
+                for propeller in propellers:
+                    if pg.sprite.collide_rect(self, propeller):
+                        self.propeller_flag = True
+                        self.velocityY.y = -10
+                        self.propeller_sound.play()
+                        pg.time.set_timer(pg.USEREVENT + 1, 2700)
 
-            for platform in platforms:
-                if (pg.sprite.collide_mask(self, platform)
-                        and platform.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
-                    self.jump()
-                    self.jump_sound.play()
+                for jetpack in jetpacks:
+                    if pg.sprite.collide_rect(self, jetpack):
+                        self.jetpack_flag = True
+                        self.velocityY.y = -15
+                        self.jetpack_sound.play()
+                        pg.time.set_timer(pg.USEREVENT + 2, 3200)
 
-        self.pos += self.velocityX
-        self.rect.center = self.getPos()
-        self.rect.centerx %= WIGHT
+                for monster in monsters:
+                    if pg.sprite.collide_rect(self, monster):
+                        self.stan = True
+
+                for platform in platforms:
+                    if (pg.sprite.collide_mask(self, platform)
+                            and platform.rect.bottom >= self.rect.bottom and self.velocityY.y >= 0):
+                        self.jump()
+                        self.jump_sound.play()
+
+                self.pos += self.velocityX
+                self.rect.center = self.getPos()
+                self.rect.centerx %= WIGHT
 
     def falling(self):
         self.pos += self.velocityY
         self.rect.center = self.getPos()
 
     def propellerStop(self, propellers):
-        self.propeller = False
+        self.propeller_flag = False
         for propeller in propellers:
             propeller.kill()
         pg.time.set_timer(pg.USEREVENT + 1, 0)
+
+    def jetpackStop(self, jetpacks):
+        self.jetpack_flag = False
+        for jetpack in jetpacks:
+            jetpack.kill()
+        pg.time.set_timer(pg.USEREVENT + 2, 0)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
