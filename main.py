@@ -9,7 +9,6 @@ def main():
     pg.mixer.init()
     size = WIGHT, HEIGHT
     screen = pg.display.set_mode(size)
-
     player_running = False
     menu_running = True
     options_running = False
