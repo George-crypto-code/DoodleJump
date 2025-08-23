@@ -1,3 +1,5 @@
+from random import choice
+
 HEIGHT = 600
 WIGHT = 375
 PLATFORM_AMOUNT = 12
@@ -5,3 +7,13 @@ GRAVITY = 0.3
 STRENGTH_JUMP = -10
 SPEED = 5
 PLATFORM_HEIGHT = (-60, 0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600)
+SPRING_INTERVAL = (11, 13, 17, 19, 23)
+TRUMP_INTERVAL = (53, 59, 61, 67, 71, 73, 79, 83)
+PROPELLER_INTERVAL = (127, 131, 137, 139, 149, 151, 157, 163, 167, 173)
+JETPACK_INTERVAL = (269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347)
+OBJECTS_INTERVALS = {
+    "spring_interval": choice(SPRING_INTERVAL),
+    "trump_interval": choice(TRUMP_INTERVAL),
+    "propeller_interval": choice(PROPELLER_INTERVAL),
+    "jetpack_interval": choice(JETPACK_INTERVAL)
+}

@@ -177,6 +177,9 @@ def main_game(screen):
                 if event.type == pg.USEREVENT + 2:
                     player.jetpackStop(all_jetpacks)
 
+                if event.type == pg.USEREVENT + 3:
+                    player.stopStan()
+
                 if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     if pause_button.click():
                         pause_flag = True

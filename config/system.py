@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 
 import pygame as pg
 
@@ -9,6 +9,7 @@ from game.objects.spring import Spring
 from game.objects.trump import Trump
 from game.objects.propeller import Propeller
 from config.settings import *
+from config.settings import OBJECTS_INTERVALS, SPRING_INTERVAL, TRUMP_INTERVAL, PROPELLER_INTERVAL, JETPACK_INTERVAL
 
 
 def get_background(path):
@@ -36,6 +37,7 @@ def set_platforms(all_platforms):
 
 def update_platforms(all_platforms, all_springs, all_trumps, all_propellers, all_jetpacks, all_monsters, score):
     lowest_platform = highest_platform = None
+
     for platform in all_platforms:
         if lowest_platform is None or platform.rect.y > lowest_platform.rect.y:
             lowest_platform = platform
@@ -43,47 +45,56 @@ def update_platforms(all_platforms, all_springs, all_trumps, all_propellers, all
             highest_platform = platform
 
     if lowest_platform.rect.y >= HEIGHT + 60:
-        all_platforms.remove(lowest_platform)
 
-        if score % 233 == 0:
+        all_platforms.remove(lowest_platform)
+        event = None
+
+        if score and score % 233 == 0:
             x = 250
             y = highest_platform.rect.y - 60
             monster = Monster(all_monsters)
             monster.setPosition(10, y)
-            current_platform = Platform(all_platforms)
-        elif score >= 200 and randint(1, 5) == 3:
-            current_platform = MovingPlatform(1, all_platforms)
-            x = randint(3, WIGHT - 60)
-            y = highest_platform.rect.y - 60
+            monster_sound = pg.mixer.Sound("sounds/monster.wav")
+            monster_sound.play()
+        # elif score >= 200 and randint(1, 5) == 3:
+        #     current_platform = MovingPlatform(1, all_platforms)
+        #     x = randint(3, WIGHT - 60)
+        #     y = highest_platform.rect.y - 60
         # elif score % 10 == 0:
         #     current_platform = BreakingPlatform(all_platforms)
         #     x = randint(3, WIGHT - 60)
         #     y = highest_platform.rect.y - 60
         else:
-            current_platform = Platform(all_platforms)
             x = randint(3, WIGHT - 60)
             y = highest_platform.rect.y - 60
 
-            if score % 13 == 0:
-                spring = Spring(all_springs)
-                spring.setPosition(x + 28, y + 2)
+            if score and score % OBJECTS_INTERVALS["spring_interval"] == 0:
+                event = Spring(all_springs)
+                OBJECTS_INTERVALS["spring_interval"] += choice(SPRING_INTERVAL)
 
-            if score and score % 31 == 0:
-                trump = Trump(all_trumps)
-                trump.setPosition(x + 28, y + 2)
+            elif score and score % OBJECTS_INTERVALS["trump_interval"] == 0:
+                event = Trump(all_trumps)
+                OBJECTS_INTERVALS["trump_interval"] += choice(TRUMP_INTERVAL)
 
-            if score and score % 97 == 0:
-                propeller = Propeller(all_propellers)
-                propeller.setPosition(x + 28, y + 2)
+            elif score and score % OBJECTS_INTERVALS["propeller_interval"] == 0:
+                event = Propeller(all_propellers)
+                OBJECTS_INTERVALS["propeller_interval"] += choice(PROPELLER_INTERVAL)
 
-            if score and score % 191 == 0:
-                jetpack = Jetpack(all_jetpacks)
-                jetpack.setPosition(x + 28, y + 2)
+            elif score and score % OBJECTS_INTERVALS["jetpack_interval"] == 0:
+                event = Jetpack(all_jetpacks)
+                OBJECTS_INTERVALS["jetpack_interval"] += choice(JETPACK_INTERVAL)
+
+        if score >= 200 and randint(1, 5) == 3:
+            current_platform = MovingPlatform(1, event, all_platforms)
+        else:
+            current_platform = Platform(all_platforms)
 
         current_platform.setPlatform(x, y)
+        if event:
+            event.setPosition(x + 28, y + 2)
+
         return 1
     return 0
-
 
 
 def show_score(screen, score):

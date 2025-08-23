@@ -1,6 +1,7 @@
 import pygame as pg
 from config.settings import WIGHT, GRAVITY, SPEED, STRENGTH_JUMP
 from game.objects.platform import BreakingPlatform
+from game.objects.stars import Stars
 
 
 class Player(pg.sprite.Sprite):
@@ -29,6 +30,8 @@ class Player(pg.sprite.Sprite):
         self.gravity = GRAVITY
         self.rect.center = self.getPos()
 
+        self.stars = Stars()
+
         self.direction = True
         self.jumping = False
         self.propeller_flag = False
@@ -45,12 +48,13 @@ class Player(pg.sprite.Sprite):
         self.velocityX.x = SPEED
 
     def setDirection(self, direction):
-        if direction == "left":
-            self.image = self.player_left_jump if self.jumping else self.player_left
-            self.direction = False
-        elif direction == "right":
-            self.image = self.player_right_jump if self.jumping else self.player_right
-            self.direction = True
+        if not self.stan:
+            if direction == "left":
+                self.image = self.player_left_jump if self.jumping else self.player_left
+                self.direction = False
+            elif direction == "right":
+                self.image = self.player_right_jump if self.jumping else self.player_right
+                self.direction = True
 
     def setVelocityX(self, value):
         self.velocityX.x = value
@@ -134,8 +138,9 @@ class Player(pg.sprite.Sprite):
                         pg.time.set_timer(pg.USEREVENT + 2, 3200)
 
                 for monster in monsters:
-                    if pg.sprite.collide_rect(self, monster):
+                    if pg.sprite.collide_mask(self, monster):
                         self.stan = True
+                        pg.time.set_timer(pg.USEREVENT + 3, 1000)
 
                 for platform in platforms:
                     if (pg.sprite.collide_mask(self, platform)
@@ -146,6 +151,8 @@ class Player(pg.sprite.Sprite):
                 self.pos += self.velocityX
                 self.rect.center = self.getPos()
                 self.rect.centerx %= WIGHT
+            else:
+                self.stars.update()
 
     def falling(self):
         self.pos += self.velocityY
@@ -163,8 +170,14 @@ class Player(pg.sprite.Sprite):
             jetpack.kill()
         pg.time.set_timer(pg.USEREVENT + 2, 0)
 
+    def stopStan(self):
+        self.stan = False
+        pg.time.set_timer(pg.USEREVENT + 3, 0)
+
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        if self.stan:
+            self.stars.draw(screen, (self.rect[0] + 5, self.rect[1] - 10))
 
     def getCurrentSpeedX(self):
         return self.velocityX.x

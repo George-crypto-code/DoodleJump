@@ -12,6 +12,7 @@ class Monster(pg.sprite.Sprite):
 
         self.image = pg.image.load("game/images/monster/1.png")
         self.rect = self.image.get_rect()
+        self.mask = pg.mask.from_surface(self.image)
         self.speed = 2
         self.x = 0
         self.counter = 0
@@ -26,6 +27,7 @@ class Monster(pg.sprite.Sprite):
         self.rect.x += self.speed
         if self.rect.x >= self.x + 100 or self.rect.x <= self.x:
             self.speed *= -1
+        self.mask = pg.mask.from_surface(self.image)
 
     def setPosition(self, x, y):
         self.rect.x, self.rect.y = x, y

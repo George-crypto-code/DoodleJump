@@ -17,18 +17,21 @@ class Platform(pg.sprite.Sprite):
 
 
 class MovingPlatform(Platform):
-    def __init__(self, speed, *group):
+    def __init__(self, speed, event, *group):
         super().__init__(*group)
         self.image = pg.image.load("game/images/platforms/moving_platform.png")
         self.rect = self.image.get_rect()
         self.speed = speed
+        self.event = event if event else None
 
     def update(self):
         self.rect.x += self.speed
+        if self.event:
+            self.event.rect.x += self.speed
         if self.rect.x >= WIGHT - 60 or self.rect.x <= 3:
             self.speed *= -1
 
-# ----------------------------doesn't work----------------------------
+# ----------------------------doesn't work------------------------------
 
 class BreakingPlatform(Platform):
     def __init__(self, *group):
